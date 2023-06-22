@@ -1,21 +1,31 @@
 # info
 
-```
+```sh
 #!/bin/bash
 
-profile=xxxxxxx
+# Define AWS SSO profile
+aws_profile=$1
 
-aws iam --profile $profile list-roles > roles.json
-arr_roles=( $(jq '.Roles[].RoleName' roles.json) )
+# Find all roles in AWS project
+aws iam --profile $aws_profile list-roles > /tmp/roles.json
+arr_roles=( $(jq '.Roles[].RoleName' /tmp/roles.json) )
+
 for role in "${arr_roles[@]}"; do
-  aws iam --profile $profile list-role-policies \
-    --role-name $role > policies.json
-  arr_policies=( $(jq '.PolicyNames[]' policies.json) )
+
+  # Find all policies for choose role
+  aws iam --profile $aws_profile list-role-policies \
+    --role-name $role > /tmp/policies.json
+  arr_policies=( $(jq '.PolicyNames[]' /tmp/policies.json) )
+
   for policy in "${arr_policies[@]}"; do
-    aws iam --profile $profile get-role-policy \
+
+    # Find all permissions for choose role and policy
+    aws iam --profile $aws_profile get-role-policy \
       --role-name $role \
-      --policy-name $policy > role_policies.json
-    if grep -iq lambda role_policies.json; then
+      --policy-name $policy > /tmp/role_policies.json
+
+    # Check is permission containg work "lambda"
+    if grep -iq "lambda" /tmp/role_policies.json; then
       echo "$role : $policy"
     fi
   done
