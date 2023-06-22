@@ -5,6 +5,7 @@
 
 # Define AWS SSO profile
 aws_profile=$1
+searching_resource=$2
 
 # Find all roles in AWS project
 aws iam --profile $aws_profile list-roles > /tmp/roles.json
@@ -25,7 +26,7 @@ for role in "${arr_roles[@]}"; do
       --policy-name $policy > /tmp/role_policies.json
 
     # Check is permission containg work "lambda"
-    if grep -iq "lambda" /tmp/role_policies.json; then
+    if grep -iq $searching_resource /tmp/role_policies.json; then
       echo "$role : $policy"
     fi
   done
