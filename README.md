@@ -9,7 +9,6 @@ searching_resource=$2
 
 # Result file
 result_file=result_$(date +"%s").txt
-touch $result_file
 
 # Find all roles in AWS project
 aws iam --profile $aws_profile list-roles > /tmp/roles.json
