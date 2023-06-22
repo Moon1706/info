@@ -17,6 +17,7 @@ arr_roles=( $(jq '.Roles[].RoleName' /tmp/roles.json) )
 for role in "${arr_roles[@]}"; do
 
   # Find all policies for choose role
+  echo "$role"
   aws iam --profile $aws_profile list-role-policies --role-name "$role" > /tmp/policies.json
   arr_policies=( $(jq '.PolicyNames[]' /tmp/policies.json) )
 
