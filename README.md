@@ -3,6 +3,7 @@
 ```sh
 #!/bin/bash
 
+# Script params
 aws_profile=$1
 searching_resource=$2
 
