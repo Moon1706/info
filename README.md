@@ -28,7 +28,7 @@ for role in "${arr_roles[@]}"; do
       --role-name $role \
       --policy-name $policy > /tmp/role_policies.json
 
-    # Check is permission containg work "lambda"
+    # Check is permission containg search params
     if grep -iq $searching_resource /tmp/role_policies.json; then
       echo "$role : $policy" >> $result_file
       cat /tmp/role_policies.json >> $result_file
