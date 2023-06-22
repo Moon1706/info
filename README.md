@@ -30,8 +30,11 @@ for role in "${arr_roles[@]}"; do
 
     # Check is permission containg search params
     if grep -iq $searching_resource /tmp/role_policies.json; then
+      echo "Find for role $role in policy $policy."
       echo "$role : $policy" >> $result_file
       cat /tmp/role_policies.json >> $result_file
+    else
+      echo "Policy $policy in role $role is empty."
     fi
   done
 done
