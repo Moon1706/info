@@ -1,7 +1,7 @@
 # info
 
 ```sh
-#!/bin/bash
+#!/bin/zsh
 
 # Script params
 aws_profile=$1
