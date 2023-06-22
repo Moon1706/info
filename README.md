@@ -3,7 +3,6 @@
 ```sh
 #!/bin/bash
 
-# Define AWS SSO profile
 aws_profile=$1
 searching_resource=$2
 
